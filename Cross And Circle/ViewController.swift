@@ -21,7 +21,7 @@ enum gameState{
     }
 }
 
-var clickedArray =  [Int]()
+var clickedArray = [0,0,0,0,0,0,0,0,0]
 
 class ViewController: UIViewController {
     @IBOutlet weak var circleOutlet: UIButton!
@@ -43,9 +43,10 @@ class ViewController: UIViewController {
     }
     
     func resetClicked(gesturerecorgnizer:UITapGestureRecognizer){
-        clickedArray =  [Int]()
+        clickedArray =  [0,0,0,0,0,0,0,0,0]
         
         game_state = .Circle
+        
         selectTurn()
         
         for sv in self.view.subviews{
@@ -61,20 +62,19 @@ class ViewController: UIViewController {
     }
 
     @IBAction func fieldTouched(sender: UIButton) {
-        
-        if(!clickedArray.contains(sender.tag)){
+        if clickedArray[sender.tag-1] == 0 {
             switch game_state{
                 case .Circle:
                     sender.setTitle("O",forState:UIControlState.Normal)
+                    clickedArray[sender.tag-1] = 1
                 case .Cross:
                     sender.setTitle("X",forState:UIControlState.Normal)
+                    clickedArray[sender.tag-1] = 2
             }
         
             game_state.next()
         
             self.selectTurn()
-            
-            clickedArray.append(sender.tag)
         }
     }
     
